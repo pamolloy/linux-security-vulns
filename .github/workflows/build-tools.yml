@@ -1,0 +1,38 @@
+name: Build Tools
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true # Initialize submodules
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgit2-dev just
+    - name: Clone Linux Kernel
+      run: |
+        mkdir -p ~/.kernel
+        git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
+    - name: Set CVEKERNELTREE
+      run: echo "CVEKERNELTREE=$HOME/.kernel" >> $GITHUB_ENV
+    - name: Build and populate verhaal database
+      run: |
+        cd tools/verhaal
+        just make
+        just build_db
+    - name: Build utils
+      run: just build_utils
