@@ -22,7 +22,7 @@ jobs:
     - name: Install build dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgit2-dev just
+        sudo apt-get install -y libgit2-dev just meson
     - name: Clone Linux Kernel
       run: |
         mkdir -p ~/.kernel
