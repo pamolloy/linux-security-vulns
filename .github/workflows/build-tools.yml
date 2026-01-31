@@ -23,6 +23,10 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgit2-dev just meson
+    - name: Clone Linux Kernel
+      run: |
+        mkdir -p ~/.kernel
+        git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
     - name: Set CVEKERNELTREE
       run: echo "CVEKERNELTREE=$HOME/.kernel" >> $GITHUB_ENV
     - name: Build and populate verhaal database
@@ -32,7 +36,3 @@ jobs:
         just build_db
     - name: Build utils
       run: just build_utils
-    - name: Clone Linux Kernel
-      run: |
-        mkdir -p ~/.kernel
-        git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
