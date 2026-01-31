@@ -26,7 +26,7 @@ jobs:
     - name: Clone Linux Kernel
       run: |
         mkdir -p ~/.kernel
-        git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
+        git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
     - name: Set CVEKERNELTREE
       run: echo "CVEKERNELTREE=$HOME/.kernel" >> $GITHUB_ENV
     - name: Build and populate verhaal database
