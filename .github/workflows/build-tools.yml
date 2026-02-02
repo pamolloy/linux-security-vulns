@@ -36,3 +36,7 @@ jobs:
         just build_db
     - name: Build utils
       run: just build_utils
+    - name: Run annual CVE summary
+      run: just summary
+    - name: Total vulnerable CVE's in 6.12.1
+      run: ./scripts/strak v6.12.1
