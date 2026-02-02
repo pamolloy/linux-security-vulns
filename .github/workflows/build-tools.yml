@@ -12,10 +12,14 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vulns
 
     steps:
     - uses: actions/checkout@v4
       with:
+        path: vulns
         submodules: true # Initialize submodules
     - name: Set up Rust
       uses: dtolnay/rust-toolchain@stable
