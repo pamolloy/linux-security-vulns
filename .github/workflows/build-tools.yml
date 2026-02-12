@@ -2,12 +2,13 @@ name: Build Tools
 
 on:
   push:
-    branches: [ main, philip/github-workflow ]
+    branches: [ philip/github-workflow ]
   pull_request:
-    branches: [ main, philip/github-workflow ]
+    branches: [ philip/github-workflow ]
 
 env:
   CARGO_TERM_COLOR: always
+  CVEKERNELTREE: ${{ github.workspace }}/linux
 
 jobs:
   build:
@@ -21,18 +22,14 @@ jobs:
       with:
         path: vulns
         submodules: true # Initialize submodules
-    - name: Set up Rust
-      uses: dtolnay/rust-toolchain@stable
     - name: Install build dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgit2-dev just meson
+        sudo apt-get install -y libgit2-dev just meson cargo
     - name: Clone Linux Kernel
       run: |
-        mkdir -p ~/.kernel
-        git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git ~/.kernel
-    - name: Set CVEKERNELTREE
-      run: echo "CVEKERNELTREE=$HOME/.kernel" >> $GITHUB_ENV
+        mkdir -p ${{ github.workspace }}/linux
+        git clone https://github.com/gregkh/linux.git ${{ github.workspace }}/linux
     - name: Build and populate verhaal database
       run: |
         cd tools/verhaal
