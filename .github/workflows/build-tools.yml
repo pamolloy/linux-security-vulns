@@ -26,10 +26,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgit2-dev just meson cargo
-    - name: Clone Linux Kernel
+    - uses: actions/checkout@v4
+      with:
+        repository: gregkh/linux
+        path: linux
+        fetch-depth: 0
+    - name: Debug
       run: |
-        mkdir -p ${{ github.workspace }}/linux
-        git clone https://github.com/gregkh/linux.git ${{ github.workspace }}/linux
+        ls ${CVEKERNELTREE}
     - name: Build and populate verhaal database
       run: |
         cd tools/verhaal
