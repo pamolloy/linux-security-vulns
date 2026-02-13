@@ -3,4 +3,4 @@
 	url = https://github.com/CVEProject/cvelistV5.git
 [submodule "tools/verhaal"]
 	path = tools/verhaal
-	url = https://git.sr.ht/~gregkh/verhaal
+	url = https://gitlab.com/pamolloy/verhaal.git
